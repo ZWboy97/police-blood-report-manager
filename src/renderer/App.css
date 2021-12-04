@@ -59,4 +59,11 @@ a:hover {
   justify-content: center;
   align-items: center;
   margin: 20px 0;
+  font-size: 40px;
+}
+
+.Hello-Button {
+  display: flex;
+  width: 80vw;
+  justify-content: space-around;
 }
