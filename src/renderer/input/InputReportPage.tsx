@@ -1,5 +1,5 @@
 import { useHistory } from 'react-router-dom';
-import { Button } from 'antd';
+import { Button, Input } from 'antd';
 
 const InputReportPage = () => {
   const history = useHistory();
@@ -10,7 +10,10 @@ const InputReportPage = () => {
 
   return (
     <div>
-      <Button onClick={onClick}>返回</Button>
+      <Input />
+      <Button size="large" onClick={onClick}>
+        返回
+      </Button>
     </div>
   );
 };

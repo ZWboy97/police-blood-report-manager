@@ -21,13 +21,13 @@ const Hello = () => {
       </div>
       <div className="Hello">血样报告管理</div>
       <div className="Hello Hello-Button">
-        <Button onClick={insertButtonClick}>
+        <Button size="large" onClick={insertButtonClick}>
           <span role="img" aria-label="books">
             📚
           </span>
           血样入库
         </Button>
-        <Button onClick={searchButtonClick}>
+        <Button size="large" onClick={searchButtonClick}>
           <span role="img" aria-label="books">
             🔍
           </span>
