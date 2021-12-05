@@ -13,6 +13,7 @@ contextBridge.exposeInMainWorld('electron', {
         'ipc-example',
         'query_by_record_id',
         'query_by_record_id_res',
+        'delete_by_record_id',
       ];
       if (validChannels.includes(channel)) {
         // Deliberately strip event as it includes `sender`
@@ -24,6 +25,7 @@ contextBridge.exposeInMainWorld('electron', {
         'ipc-example',
         'query_by_record_id',
         'query_by_record_id_res',
+        'delete_by_record_id',
       ];
       if (validChannels.includes(channel)) {
         // Deliberately strip event as it includes `sender`

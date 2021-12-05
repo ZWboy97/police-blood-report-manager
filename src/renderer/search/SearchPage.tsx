@@ -18,27 +18,42 @@ const SearchPage = () => {
   };
 
   const onSearchClick = () => {
-    setResultVisible(true);
     const res = window.electron.ipcRenderer.sendMsg(
       'query_by_record_id',
       inputValue
     );
     console.log({ res });
-    const { result, error } = res;
-    if (error != null) {
-      message.error('查找失败');
-    } else if (result) {
+    const { result } = res;
+    if (result) {
       message.success('查找成功');
-      setBoxNum(res.result.box_id);
-      setDrawerIndex(res.result.drawer_id);
+      setBoxNum(result.box_id);
+      setDrawerIndex(result.drawer_id);
+      setResultVisible(true);
+      setHasResult(true);
     } else {
       message.info('未查找到');
+      setBoxNum(0);
+      setDrawerIndex(0);
+      setResultVisible(false);
+      setHasResult(false);
     }
   };
 
   const onDeleteReport = (e: any) => {
     e.preventDefault();
-    message.success('删除成功');
+    const res = window.electron.ipcRenderer.sendMsg(
+      'delete_by_record_id',
+      inputValue
+    );
+    console.log({ res });
+    const { error } = res;
+    if (!error) {
+      message.success('删除成功');
+      setBoxNum(0);
+      setDrawerIndex(0);
+      setResultVisible(false);
+      setHasResult(false);
+    }
   };
 
   return (

@@ -25,16 +25,16 @@ export default class Dao {
     this.dataBase.run(
       'CREATE INDEX IF NOT EXISTS box_index on t_blood_record(box_id);'
     );
+    this.dataBase.on('trace', (sql) => {
+      console.log({ sql });
+    });
   };
 
-  insertRecord = (
-    id: string,
-    boxId: string,
-    drawerId: string,
-    time: string
-  ) => {
+  insertRecord = (id: string, boxId: string, drawerId: string) => {
+    const date = new Date();
+    const timestamp = date.getTime().toString();
     this.dataBase.run(
-      `INSERT INTO t_blood_record VALUES(${id},${boxId},${drawerId},${time})`
+      `INSERT INTO t_blood_record VALUES(${id},${boxId},${drawerId},${timestamp})`
     );
   };
 
@@ -54,8 +54,9 @@ export default class Dao {
     callback: (res: sqlite3.RunResult, err: Error) => void
   ) => {
     this.dataBase.run(
-      `DELETE FROM t_blood_record WHERE id = ${id}`,
-      (res: sqlite3.RunResult, err: Error) => {
+      `DELETE FROM t_blood_record WHERE id = '${id}'`,
+      (err: Error, res: sqlite3.RunResult) => {
+        console.log({ res }, { err });
         callback(res, err);
       }
     );

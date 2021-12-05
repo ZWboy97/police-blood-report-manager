@@ -139,12 +139,19 @@ app
 
 const dao: Dao = new Dao();
 dao.initDataBase();
-const date = new Date();
-const timestamp = date.getTime().toString();
 
 ipcMain.on('query_by_record_id', (event, arg) => {
   console.log('recerve query request', arg);
   dao.queryByRecordId(arg, (res, err) => {
+    event.returnValue = {
+      result: res,
+      error: err,
+    };
+  });
+});
+
+ipcMain.on('delete_by_record_id', (event, arg) => {
+  dao.deleteByRecordId(arg, (res, err) => {
     event.returnValue = {
       result: res,
       error: err,
