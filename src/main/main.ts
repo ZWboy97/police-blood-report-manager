@@ -14,6 +14,7 @@ import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import Dao from './sqldb';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
@@ -135,3 +136,18 @@ app
     });
   })
   .catch(console.log);
+
+const dao: Dao = new Dao();
+dao.initDataBase();
+const date = new Date();
+const timestamp = date.getTime().toString();
+
+ipcMain.on('query_by_record_id', (event, arg) => {
+  console.log('recerve query request', arg);
+  dao.queryByRecordId(arg, (res, err) => {
+    event.returnValue = {
+      result: res,
+      error: err,
+    };
+  });
+});

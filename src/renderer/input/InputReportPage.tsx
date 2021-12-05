@@ -1,5 +1,6 @@
 import { useHistory } from 'react-router-dom';
 import { Button, Input, Switch, message } from 'antd';
+
 import './input.css';
 
 const InputReportPage = () => {

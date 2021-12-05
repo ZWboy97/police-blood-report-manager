@@ -1,9 +1,11 @@
+/* eslint-disable no-console */
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Input, message, Popconfirm } from 'antd';
 import './search.css';
 
 const SearchPage = () => {
+  const [inputValue, setInputValue] = useState('');
   const [resultVisible, setResultVisible] = useState(false);
   const [boxNum, setBoxNum] = useState(0);
   const [drawerIndex, setDrawerIndex] = useState(0);
@@ -17,6 +19,21 @@ const SearchPage = () => {
 
   const onSearchClick = () => {
     setResultVisible(true);
+    const res = window.electron.ipcRenderer.sendMsg(
+      'query_by_record_id',
+      inputValue
+    );
+    console.log({ res });
+    const { result, error } = res;
+    if (error != null) {
+      message.error('查找失败');
+    } else if (result) {
+      message.success('查找成功');
+      setBoxNum(res.result.box_id);
+      setDrawerIndex(res.result.drawer_id);
+    } else {
+      message.info('未查找到');
+    }
   };
 
   const onDeleteReport = (e: any) => {
@@ -28,7 +45,13 @@ const SearchPage = () => {
     <div className="search_page_container">
       <div className="search_page_header">
         <div className="search_page_title">血样报告查询</div>
-        <Input size="large" placeholder="输入血样报告编号" />
+        <Input
+          onChange={(e) => {
+            setInputValue(e.target.value.toString());
+          }}
+          size="large"
+          placeholder="输入血样报告编号"
+        />
         <div className="button_container">
           <Button size="large" onClick={onSearchClick}>
             🔍查询
