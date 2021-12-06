@@ -1,14 +1,31 @@
 /* eslint-disable no-console */
 import { useHistory } from 'react-router-dom';
-import { Button, Input, Switch, message, Form } from 'antd';
+import {
+  Button,
+  Input,
+  Switch,
+  message,
+  Form,
+  notification,
+  Descriptions,
+} from 'antd';
 
 import './input.css';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 const InputReportPage = () => {
+  const initInput = {
+    recordId: '',
+    drawerId: '',
+    boxId: '',
+  };
   const history = useHistory();
   const [isAutoSubmit, setIsAutoSubmit] = useState(false);
-  let submittedInputs = { recordId: '' };
+  const [latestSubmitted, setLatestSubmitted] = useState(initInput);
+  const [form] = Form.useForm();
+
+  let submittedInputs = initInput;
+  const recordInputRef: any = React.createRef();
 
   const onBackClick = () => {
     history.push('index');
@@ -32,8 +49,12 @@ const InputReportPage = () => {
     if (error == null) {
       message.success('添加成功');
       submittedInputs = values;
+      setLatestSubmitted(submittedInputs);
+      form.setFieldsValue({ ...submittedInputs, recordId: '' });
     } else {
       message.error(`添加失败，检查是否重复添加或者参数错误。${error.message}`);
+      submittedInputs = initInput;
+      setLatestSubmitted(submittedInputs);
     }
   };
 
@@ -48,6 +69,21 @@ const InputReportPage = () => {
     onSubmitClick(allValues);
   };
 
+  const onDeleteLatestSubmited = (e: any, recordId: string) => {
+    e.preventDefault();
+    const res = window.electron.ipcRenderer.sendMsg(
+      'delete_by_record_id',
+      recordId
+    );
+    console.log({ res });
+    const { error } = res;
+    if (!error) {
+      message.success('删除成功');
+      submittedInputs = initInput;
+      setLatestSubmitted(submittedInputs);
+    }
+  };
+
   return (
     <div className="input_page_container">
       <div className="input_page_title">血样报告入库</div>
@@ -56,6 +92,7 @@ const InputReportPage = () => {
           className="input_page_inputs"
           size="large"
           name="basic"
+          form={form}
           labelCol={{ span: 4, offset: 2 }}
           wrapperCol={{ span: 14 }}
           onFinish={onSubmitClick}
@@ -101,6 +138,7 @@ const InputReportPage = () => {
             <Input
               className="input"
               size="large"
+              ref={recordInputRef}
               placeholder="请输入报告编号"
             />
           </Form.Item>
@@ -114,12 +152,19 @@ const InputReportPage = () => {
                   defaultChecked={isAutoSubmit}
                   onChange={(status) => {
                     if (status) {
-                      message.info(
-                        '自动提交已打开，当检测到报告编号变更则自动提交'
-                      );
-                      message.warn(
-                        '注意每次对报告编号的变更都将产生一次新的提交'
-                      );
+                      message.info('自动提交开启');
+                      notification.open({
+                        message: '自动提交注意事项',
+                        description: (
+                          <div>
+                            <div>
+                              1. 注意每次对报告编号的变更都将产生一次新的提交
+                            </div>
+                            <div>2. 扫码枪输入时候不要人为修改</div>
+                            <div>3. 错误输入可通过报告编号查找删除</div>
+                          </div>
+                        ),
+                      });
                       setIsAutoSubmit(true);
                     } else {
                       setIsAutoSubmit(false);
@@ -138,6 +183,30 @@ const InputReportPage = () => {
             </div>
           </Form.Item>
         </Form>
+      </div>
+      <div className="last_submited_info">
+        <div className="last_submited_title"> 上一次提交</div>
+        <Descriptions className="last_submited_desc" size="small">
+          <Descriptions.Item label="报告编号">
+            <div style={{ color: 'white' }}>{latestSubmitted.recordId}</div>
+          </Descriptions.Item>
+          <Descriptions.Item label="箱子编号">
+            <div style={{ color: 'white' }}>{latestSubmitted.boxId}</div>
+          </Descriptions.Item>
+          <Descriptions.Item label="抽屉编号">
+            <div style={{ color: 'white' }}>{latestSubmitted.drawerId}</div>
+          </Descriptions.Item>
+          <Descriptions.Item label="操作">
+            <a
+              href="http://"
+              onClick={(e) => {
+                onDeleteLatestSubmited(e, latestSubmitted.recordId);
+              }}
+            >
+              删除
+            </a>
+          </Descriptions.Item>
+        </Descriptions>
       </div>
     </div>
   );
