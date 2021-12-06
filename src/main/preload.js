@@ -14,6 +14,7 @@ contextBridge.exposeInMainWorld('electron', {
         'query_by_record_id',
         'query_by_record_id_res',
         'delete_by_record_id',
+        'insert_record_info',
       ];
       if (validChannels.includes(channel)) {
         // Deliberately strip event as it includes `sender`
@@ -26,6 +27,7 @@ contextBridge.exposeInMainWorld('electron', {
         'query_by_record_id',
         'query_by_record_id_res',
         'delete_by_record_id',
+        'insert_record_info',
       ];
       if (validChannels.includes(channel)) {
         // Deliberately strip event as it includes `sender`

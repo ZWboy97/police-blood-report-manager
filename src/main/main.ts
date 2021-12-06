@@ -158,3 +158,12 @@ ipcMain.on('delete_by_record_id', (event, arg) => {
     };
   });
 });
+
+ipcMain.on('insert_record_info', (event, arg) => {
+  dao.insertRecord(arg.id, arg.box_id, arg.drawer_id, (res, err) => {
+    event.returnValue = {
+      result: res,
+      error: err,
+    };
+  });
+});
