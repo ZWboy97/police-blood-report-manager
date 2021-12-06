@@ -30,8 +30,8 @@
     ]
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "BloodRecordManager",
+    "appId": "org.erb.BloodRecordManager",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [

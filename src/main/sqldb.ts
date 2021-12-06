@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import sqlite3 from 'sqlite3';
 import path from 'path';
+import electron from 'electron';
 
 export default class Dao {
   dbObj: sqlite3.sqlite3;
@@ -9,7 +10,8 @@ export default class Dao {
 
   constructor() {
     this.dbObj = sqlite3.verbose();
-    this.dataBase = new this.dbObj.Database(path.join(__dirname, 'sqldb.db'));
+    const dbPath = path.join(electron.app.getPath('appData'), 'sqldb.db');
+    this.dataBase = new this.dbObj.Database(dbPath);
   }
 
   initDataBase = () => {

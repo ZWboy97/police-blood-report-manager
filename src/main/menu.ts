@@ -1,15 +1,29 @@
-import {
+import electron, {
   app,
   Menu,
   shell,
   BrowserWindow,
   MenuItemConstructorOptions,
+  dialog,
 } from 'electron';
+import path from 'path';
+import fs, { opendir } from 'fs';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string;
   submenu?: DarwinMenuItemConstructorOptions[] | Menu;
 }
+
+const dbPath = path.join(electron.app.getPath('appData'), 'sqldb.db');
+
+const openDirPath = (res: any) => {
+  const buttonIndex = res.response;
+  if (buttonIndex === 1) {
+    if (fs.existsSync(electron.app.getPath('appData'))) {
+      shell.openPath(electron.app.getPath('appData'));
+    }
+  }
+};
 
 export default class MenuBuilder {
   mainWindow: BrowserWindow;
@@ -189,27 +203,11 @@ export default class MenuBuilder {
         ? subMenuViewDev
         : subMenuViewProd;
 
-    return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
+    return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow];
   }
 
   buildDefaultTemplate() {
     const templateDefault = [
-      {
-        label: '&File',
-        submenu: [
-          {
-            label: '&Open',
-            accelerator: 'Ctrl+O',
-          },
-          {
-            label: '&Close',
-            accelerator: 'Ctrl+W',
-            click: () => {
-              this.mainWindow.close();
-            },
-          },
-        ],
-      },
       {
         label: '&View',
         submenu:
@@ -253,35 +251,16 @@ export default class MenuBuilder {
               ],
       },
       {
-        label: 'Help',
-        submenu: [
-          {
-            label: 'Learn More',
-            click() {
-              shell.openExternal('https://electronjs.org');
-            },
-          },
-          {
-            label: 'Documentation',
-            click() {
-              shell.openExternal(
-                'https://github.com/electron/electron/tree/main/docs#readme'
-              );
-            },
-          },
-          {
-            label: 'Community Discussions',
-            click() {
-              shell.openExternal('https://www.electronjs.org/community');
-            },
-          },
-          {
-            label: 'Search Issues',
-            click() {
-              shell.openExternal('https://github.com/electron/electron/issues');
-            },
-          },
-        ],
+        label: '&DataBase',
+        click: () => {
+          const promise = dialog.showMessageBox({
+            type: 'info',
+            title: '数据库文件位置, 可拷贝迁移数据',
+            message: dbPath,
+            buttons: ['关闭', '打开文件位置'],
+          });
+          promise.then(openDirPath).catch((error) => {});
+        },
       },
     ];
 
