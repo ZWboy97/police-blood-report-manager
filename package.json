@@ -33,6 +33,12 @@
     "productName": "BloodRecordManager",
     "appId": "org.erb.BloodRecordManager",
     "asar": true,
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "runAfterFinish": true
+   },
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
       "dist",
