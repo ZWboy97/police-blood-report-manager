@@ -85,12 +85,22 @@ export default class Dao {
     });
   };
 
-  queryReocrdSeqInDrawer = (
+  queryAllRecordInDrawer = (
     box_id: string,
     drawer_id: string,
-    create_time: string,
     callback: (res: sqlite3.RunResult, err: Error) => void
-  ) => {};
+  ) => {
+    this.dataBase.all(
+      `Select * FROM t_blood_record 
+      WHERE box_id = '${box_id}' 
+      AND drawer_id = '${drawer_id}' 
+      ORDER BY create_time DESC`,
+      (err: Error, res: sqlite3.RunResult) => {
+        console.log({ res }, { err });
+        callback(res, err);
+      }
+    );
+  };
 
   deleteByRecordId = (
     id: string,

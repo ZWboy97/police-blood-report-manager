@@ -150,6 +150,16 @@ ipcMain.on('query_by_record_id', (event, arg) => {
   });
 });
 
+ipcMain.on('query_by_drawer_id', (event, arg) => {
+  console.log('recerve query request', arg);
+  dao.queryAllRecordInDrawer(arg.box_id, arg.drawer_id, (res, err) => {
+    event.returnValue = {
+      result: res,
+      error: err,
+    };
+  });
+});
+
 ipcMain.on('delete_by_record_id', (event, arg) => {
   dao.deleteByRecordId(arg, (res, err) => {
     event.returnValue = {

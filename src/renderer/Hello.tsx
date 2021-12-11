@@ -14,6 +14,10 @@ const Hello = () => {
     history.push('/search/');
   };
 
+  const viewAllListButtonClick = () => {
+    history.push('/list/');
+  };
+
   return (
     <div>
       <div className="Hello">
@@ -23,7 +27,7 @@ const Hello = () => {
       <div className="Hello Hello-Button">
         <Button size="large" onClick={insertButtonClick}>
           <span role="img" aria-label="books">
-            📚
+            ➕
           </span>
           血样入库
         </Button>
@@ -32,6 +36,12 @@ const Hello = () => {
             🔍
           </span>
           血样查询
+        </Button>
+        <Button size="large" onClick={viewAllListButtonClick}>
+          <span role="img" aria-label="books">
+            📚
+          </span>
+          所有血样
         </Button>
       </div>
     </div>
