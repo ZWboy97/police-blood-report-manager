@@ -10,25 +10,34 @@ export default class Dao {
 
   constructor() {
     this.dbObj = sqlite3.verbose();
-    const dbPath = path.join(electron.app.getPath('appData'), 'sqldb.db');
-    this.dataBase = new this.dbObj.Database(dbPath);
+    const dbPath = path.join(
+      path.dirname(electron.app.getPath('exe')),
+      'sqldb.db'
+    );
+    this.dataBase = new this.dbObj.Database(dbPath, (err: Error | null) => {
+      if (err) {
+        console.log('Sqlite Database creation error', { err });
+      }
+    });
   }
 
   initDataBase = () => {
-    this.dataBase.run(
-      'CREATE TABLE IF NOT EXISTS t_blood_record' +
-        ' (' +
-        'id TEXT NOT NULL PRIMARY KEY , ' +
-        'box_id TEXT NOT NULL , ' +
-        'drawer_id TEXT NOT NULL , ' +
-        'create_time TEXT NOT NULL ' +
-        ');'
-    );
-    this.dataBase.run(
-      'CREATE INDEX IF NOT EXISTS box_index on t_blood_record(box_id);'
-    );
-    this.dataBase.on('trace', (sql) => {
-      console.log({ sql });
+    this.dataBase.serialize(() => {
+      this.dataBase.run(
+        'CREATE TABLE IF NOT EXISTS t_blood_record' +
+          ' (' +
+          'id TEXT NOT NULL PRIMARY KEY , ' +
+          'box_id TEXT NOT NULL , ' +
+          'drawer_id TEXT NOT NULL , ' +
+          'create_time TEXT NOT NULL ' +
+          ');'
+      );
+      this.dataBase.run(
+        'CREATE INDEX IF NOT EXISTS box_index on t_blood_record(box_id);'
+      );
+      this.dataBase.on('trace', (sql) => {
+        console.log({ sql });
+      });
     });
   };
 
@@ -56,7 +65,11 @@ export default class Dao {
     const sqlstr = `SELECT * FROM t_blood_record WHERE id = '${id}' `;
     this.dataBase.get(sqlstr, (err: Error, res: sqlite3.RunResult) => {
       console.log({ res }, { err });
-      callback(res, err);
+      if (err) {
+        callback(res, err);
+      } else {
+        const querySeqSqlStr = `SELECT COUNT(*) FROM t_blood_record WHERE box_id = '${id}' `;
+      }
     });
   };
 

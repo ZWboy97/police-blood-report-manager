@@ -14,13 +14,14 @@ interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   submenu?: DarwinMenuItemConstructorOptions[] | Menu;
 }
 
-const dbPath = path.join(electron.app.getPath('appData'), 'sqldb.db');
+const exeDirPath = path.dirname(electron.app.getPath('exe'));
+const dbPath = path.join(exeDirPath, 'sqldb.db');
 
 const openDirPath = (res: any) => {
   const buttonIndex = res.response;
   if (buttonIndex === 1) {
-    if (fs.existsSync(electron.app.getPath('appData'))) {
-      shell.openPath(electron.app.getPath('appData'));
+    if (fs.existsSync(exeDirPath)) {
+      shell.openPath(exeDirPath);
     }
   }
 };
