@@ -63,15 +63,34 @@ export default class Dao {
     callback: (res: sqlite3.RunResult, err: Error) => void
   ) => {
     const sqlstr = `SELECT * FROM t_blood_record WHERE id = '${id}' `;
-    this.dataBase.get(sqlstr, (err: Error, res: sqlite3.RunResult) => {
+    this.dataBase.get(sqlstr, (err: Error, res: any) => {
       console.log({ res }, { err });
       if (err) {
         callback(res, err);
       } else {
-        const querySeqSqlStr = `SELECT COUNT(*) FROM t_blood_record WHERE box_id = '${id}' `;
+        const querySeqSqlStr = `
+        SELECT COUNT(*) AS seq FROM t_blood_record 
+        WHERE box_id = '${res.box_id}' 
+        AND drawer_id = '${res.drawer_id}' 
+        AND create_time <= '${res.create_time}'`;
+        this.dataBase.get(querySeqSqlStr, (error: Error, result: any) => {
+          console.log({ result }, { error });
+          if (error) {
+            callback(result, error);
+          } else {
+            callback({ ...res, ...result }, error);
+          }
+        });
       }
     });
   };
+
+  queryReocrdSeqInDrawer = (
+    box_id: string,
+    drawer_id: string,
+    create_time: string,
+    callback: (res: sqlite3.RunResult, err: Error) => void
+  ) => {};
 
   deleteByRecordId = (
     id: string,

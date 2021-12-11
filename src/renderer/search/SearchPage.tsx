@@ -9,6 +9,7 @@ const SearchPage = () => {
   const [resultVisible, setResultVisible] = useState(false);
   const [boxNum, setBoxNum] = useState(0);
   const [drawerIndex, setDrawerIndex] = useState(0);
+  const [recordSeqInDrawer, setRecordSeqInDrawer] = useState(0);
   const [hasResult, setHasResult] = useState(true);
 
   const history = useHistory();
@@ -30,12 +31,14 @@ const SearchPage = () => {
       message.success('查找成功');
       setBoxNum(result.box_id);
       setDrawerIndex(result.drawer_id);
+      setRecordSeqInDrawer(result.seq);
       setResultVisible(true);
       setHasResult(true);
     } else {
       message.info('未查找到');
       setBoxNum(0);
       setDrawerIndex(0);
+      setRecordSeqInDrawer(0);
       setResultVisible(false);
       setHasResult(false);
     }
@@ -85,8 +88,9 @@ const SearchPage = () => {
           <div>
             <div>
               报告位置在：
-              <span className="result_num">{boxNum}</span> 号箱子{' ,'}
-              <span className="result_num">{drawerIndex}</span>号抽屉
+              <span className="result_num"> {boxNum}</span>号箱子,
+              <span className="result_num"> {drawerIndex}</span>号抽屉,
+              <span className="result_num"> {recordSeqInDrawer}</span>号位置
             </div>
             <div>
               对报告操作：
