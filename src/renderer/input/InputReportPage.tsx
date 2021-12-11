@@ -39,6 +39,8 @@ const InputReportPage = () => {
       message.error('输入存在空值，请检查');
       return;
     }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const res = window.electron.ipcRenderer.sendMsg('insert_record_info', {
       id: recordId,
       drawer_id: drawerId,
@@ -71,6 +73,8 @@ const InputReportPage = () => {
 
   const onDeleteLatestSubmited = (e: any, recordId: string) => {
     e.preventDefault();
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const res = window.electron.ipcRenderer.sendMsg(
       'delete_by_record_id',
       recordId

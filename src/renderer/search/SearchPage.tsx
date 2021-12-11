@@ -18,6 +18,8 @@ const SearchPage = () => {
   };
 
   const onSearchClick = () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const res = window.electron.ipcRenderer.sendMsg(
       'query_by_record_id',
       inputValue
@@ -41,6 +43,8 @@ const SearchPage = () => {
 
   const onDeleteReport = (e: any) => {
     e.preventDefault();
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const res = window.electron.ipcRenderer.sendMsg(
       'delete_by_record_id',
       inputValue
