@@ -33,6 +33,9 @@ export default class Dao {
           ');'
       );
       this.dataBase.run(
+        'CREATE TABLE IF NOT EXISTS t_sys_setting (back_up_path TEXT );'
+      );
+      this.dataBase.run(
         'CREATE INDEX IF NOT EXISTS box_index on t_blood_record(box_id);'
       );
       this.dataBase.on('trace', (sql) => {
@@ -113,5 +116,38 @@ export default class Dao {
         callback(res, err);
       }
     );
+  };
+
+  getBackUpPathSetting = (
+    callback: (res: sqlite3.RunResult, err: Error) => void
+  ) => {
+    this.dataBase.get(
+      `SELECT back_up_path FROM t_sys_setting`,
+      (err: Error, res: sqlite3.RunResult) => {
+        console.log({ res }, { err });
+        callback(res, err);
+      }
+    );
+  };
+
+  updateBackUpPathSetting = (
+    newPath: string,
+    callback: (res: sqlite3.RunResult, err: Error) => void
+  ) => {
+    this.dataBase.serialize(() => {
+      this.dataBase.run(
+        `DELETE FROM t_sys_setting`,
+        (err: Error, res: sqlite3.RunResult) => {
+          console.log({ res }, { err });
+        }
+      );
+      this.dataBase.run(
+        `INSERT INTO t_sys_setting VALUES( '${newPath}' )`,
+        (err: Error, res: sqlite3.RunResult) => {
+          console.log({ res }, { err });
+          callback(res, err);
+        }
+      );
+    });
   };
 }

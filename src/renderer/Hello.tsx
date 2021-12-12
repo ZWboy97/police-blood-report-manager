@@ -23,7 +23,7 @@ const Hello = () => {
       <div className="Hello">
         <img width="200px" alt="icon" src={icon} />
       </div>
-      <div className="Hello">血样报告管理</div>
+      <div className="Hello">血样管家</div>
       <div className="Hello Hello-Button">
         <Button size="large" onClick={insertButtonClick}>
           <span role="img" aria-label="books">

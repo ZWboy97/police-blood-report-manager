@@ -30,7 +30,7 @@
     ]
   },
   "build": {
-    "productName": "BloodRecordManager",
+    "productName": "血样管家",
     "appId": "org.erb.BloodRecordManager",
     "asar": true,
     "nsis": {
@@ -38,7 +38,7 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "runAfterFinish": true
-   },
+    },
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
       "dist",
@@ -238,6 +238,7 @@
   },
   "dependencies": {
     "@types/sqlite3": "^3.1.7",
+    "about-window": "^1.15.2",
     "antd": "^4.17.2",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.1",
