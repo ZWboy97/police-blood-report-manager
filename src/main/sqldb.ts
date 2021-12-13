@@ -68,7 +68,7 @@ export default class Dao {
     const sqlstr = `SELECT * FROM t_blood_record WHERE id = '${id}' `;
     this.dataBase.get(sqlstr, (err: Error, res: any) => {
       console.log({ res }, { err });
-      if (err) {
+      if (err || res === undefined) {
         callback(res, err);
       } else {
         const querySeqSqlStr = `

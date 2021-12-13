@@ -27,7 +27,7 @@ const SearchPage = () => {
     );
     console.log({ res });
     const { result } = res;
-    if (result) {
+    if (result !== undefined && result !== null) {
       message.success('查找成功');
       setBoxNum(result.box_id);
       setDrawerIndex(result.drawer_id);
