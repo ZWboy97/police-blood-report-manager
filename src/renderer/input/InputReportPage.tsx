@@ -100,16 +100,6 @@ const InputReportPage = () => {
           labelCol={{ span: 4, offset: 2 }}
           wrapperCol={{ span: 14 }}
           onFinish={onSubmitClick}
-          onValuesChange={(changedFields, allFields) => {
-            console.log({ changedFields }, { allFields });
-            const hasRecordIdChanged = Object.prototype.hasOwnProperty.call(
-              changedFields,
-              'recordId'
-            );
-            if (hasRecordIdChanged) {
-              onAutoSubmitClick(allFields);
-            }
-          }}
           autoComplete="off"
         >
           <Form.Item
@@ -144,6 +134,11 @@ const InputReportPage = () => {
               size="large"
               ref={recordInputRef}
               placeholder="请输入报告编号"
+              onPressEnter={(e) => {
+                if (!isAutoSubmit) {
+                  e.preventDefault();
+                }
+              }}
             />
           </Form.Item>
           <Form.Item wrapperCol={{ span: 24 }}>
