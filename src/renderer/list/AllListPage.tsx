@@ -29,7 +29,6 @@ function AllListPage() {
   const getDateString = (timestamp: string) => {
     const time: number = parseInt(timestamp, 10);
     const date = new Date(time);
-    console.log({ date });
     const year = date.getFullYear(); // 获取完整的年份(4位,1970)
     const month = date.getMonth(); // 获取月份(0-11,0代表1月,用的时候记得加上1)
     const day = date.getDate(); // 获取日(1-31)
@@ -70,7 +69,6 @@ function AllListPage() {
   ];
 
   const onFinish = (values: any) => {
-    console.log('Search In Drawer', { values });
     const { boxId, drawerId } = values;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -78,7 +76,6 @@ function AllListPage() {
       box_id: boxId,
       drawer_id: drawerId,
     });
-    console.log({ res });
     const { result, error } = res;
     if (error) {
       message.warn(`查询失败，请检查输入:${error}`);
@@ -152,7 +149,7 @@ function AllListPage() {
           columns={columns}
           dataSource={allRecordList}
           className="all_list_result_table"
-          pagination={{ defaultPageSize: 10 }}
+          pagination={{ defaultPageSize: 200 }}
         />
       </div>
     </div>
