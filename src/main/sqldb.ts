@@ -51,7 +51,7 @@ export default class Dao {
     callback: (res: sqlite3.RunResult, err: Error) => void
   ) => {
     const date = new Date();
-    const timestamp = date.getTime().toString();
+    const timestamp = (date.getTime() / 1000).toString();
     this.dataBase.run(
       `INSERT INTO t_blood_record VALUES( '${id}' , '${boxId}' , '${drawerId}' , '${timestamp}' )`,
       (err: Error, res: sqlite3.RunResult) => {

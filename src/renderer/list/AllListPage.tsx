@@ -27,7 +27,7 @@ function AllListPage() {
   const history = useHistory();
 
   const getDateString = (timestamp: string) => {
-    const time: number = parseInt(timestamp, 10);
+    const time: number = parseInt(timestamp, 10) * 1000;
     const date = new Date(time);
     const year = date.getFullYear(); // 获取完整的年份(4位,1970)
     const month = date.getMonth(); // 获取月份(0-11,0代表1月,用的时候记得加上1)
