@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import { useHistory } from 'react-router-dom';
 import {
@@ -25,7 +26,7 @@ const InputReportPage = () => {
   const [form] = Form.useForm();
 
   let submittedInputs = initInput;
-  const recordInputRef: any = React.createRef();
+  const recordInputRef: React.LegacyRef<Input> = React.createRef();
 
   const onBackClick = () => {
     history.push('index');
@@ -58,17 +59,6 @@ const InputReportPage = () => {
       submittedInputs = initInput;
       setLatestSubmitted(submittedInputs);
     }
-  };
-
-  const onAutoSubmitClick = (allValues: any) => {
-    if (!isAutoSubmit) {
-      return;
-    }
-    if (allValues.recordId === submittedInputs.recordId) {
-      return;
-    }
-    console.log({ allValues });
-    onSubmitClick(allValues);
   };
 
   const onDeleteLatestSubmited = (e: any, recordId: string) => {

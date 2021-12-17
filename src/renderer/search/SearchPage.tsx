@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';

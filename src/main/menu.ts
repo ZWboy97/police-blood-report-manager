@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import electron, {
   app,
   Menu,
@@ -6,9 +7,8 @@ import electron, {
   MenuItemConstructorOptions,
   dialog,
 } from 'electron';
-import openAboutWindow from 'about-window';
 import path from 'path';
-import fs, { opendir } from 'fs';
+import fs from 'fs';
 import Dao from './sqldb';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
@@ -52,10 +52,9 @@ const backUpDateBaseFile = () => {
 
 const changeBackUpPath = (result: any) => {
   const { canceled, filePaths } = result;
-  console.log({ filePaths });
   if (!canceled) {
     const backUPFilePath = path.join(filePaths[0], 'sqldb.bak.db');
-    dao.updateBackUpPathSetting(backUPFilePath, (res: any, error: Error) => {
+    dao.updateBackUpPathSetting(backUPFilePath, (_res: any, error: Error) => {
       if (error) {
         dialog.showMessageBox({
           type: 'info',
@@ -213,37 +212,6 @@ export default class MenuBuilder {
         { label: 'Bring All to Front', selector: 'arrangeInFront:' },
       ],
     };
-    const subMenuHelp: MenuItemConstructorOptions = {
-      label: 'Help',
-      submenu: [
-        {
-          label: 'Learn More',
-          click() {
-            shell.openExternal('https://electronjs.org');
-          },
-        },
-        {
-          label: 'Documentation',
-          click() {
-            shell.openExternal(
-              'https://github.com/electron/electron/tree/main/docs#readme'
-            );
-          },
-        },
-        {
-          label: 'Community Discussions',
-          click() {
-            shell.openExternal('https://www.electronjs.org/community');
-          },
-        },
-        {
-          label: 'Search Issues',
-          click() {
-            shell.openExternal('https://github.com/electron/electron/issues');
-          },
-        },
-      ],
-    };
 
     const subMenuView =
       process.env.NODE_ENV === 'development' ||
@@ -283,7 +251,7 @@ export default class MenuBuilder {
               dialog.showMessageBox({
                 type: 'info',
                 title: '数据库导入导出指导',
-                message: `数据导入导出，请使用SqliteStudio软件，位置在：工具栏->Tools->Import和Output。\n 选择导入导出单张表，为了配合Excel使用，导入导出格式推荐选择.csv`,
+                message: `数据导入导出，请使用SqliteStudio软件，位置在:工具栏->Tools->Import和Output。\n 选择导入导出单张表，为了配合Excel使用，导入导出格式推荐选择.csv`,
               });
             },
           },

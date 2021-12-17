@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import { useState, useEffect } from 'react';
 import { Form, Table, Input, Button, Space, message } from 'antd';
@@ -62,7 +63,7 @@ function AllListPage() {
       dataIndex: 'create_time',
       key: 'create_time',
       align: 'center',
-      render: (text, record, index) => {
+      render: (_text, record) => {
         return getDateString(record.create_time);
       },
     },
