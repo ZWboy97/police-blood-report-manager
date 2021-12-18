@@ -1,6 +1,6 @@
 {
-  "name": "electron-react-boilerplate",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Fast Refresh for rapid application development",
+  "name": "police-blood-report-manager",
+  "description": "Police blood report manager (血样管家), an electron application based on React, React Router, Webpack",
   "scripts": {
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
     "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.prod.ts",
@@ -95,20 +95,25 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate"
+      "owner": "ZWboy97",
+      "repo": "police-blood-report-manager"
     }
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/electron-react-boilerplate/electron-react-boilerplate.git"
+    "url": "git+https://github.com/ZWboy97/police-blood-report-manager.git"
   },
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://electron-react-boilerplate.js.org"
+    "name": "ZWboy and Electron React Boilerplate Maintainers",
+    "email": "jackchance@bupt.edu.cn",
+    "url": "https://github.com/ZWboy97/police-blood-report-manager"
   },
   "contributors": [
+    {
+      "name": "ZWboy",
+      "email": "jackchance@bupt.edu.cn",
+      "url": "https://github.com/ZWboy97/"
+    },
     {
       "name": "Amila Welihinda",
       "email": "amilajack@gmail.com",
@@ -122,9 +127,10 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues"
+    "url": "https://github.com/zwboy97/police-blood-report-manager/issues"
   },
   "keywords": [
+    "sqlite",
     "electron",
     "boilerplate",
     "react",
@@ -135,7 +141,7 @@
     "hot",
     "reload"
   ],
-  "homepage": "https://github.com/electron-react-boilerplate/electron-react-boilerplate#readme",
+  "homepage": "https://github.com/zwboy97/police-blood-report-manager#readme",
   "jest": {
     "testURL": "http://localhost/",
     "testEnvironment": "jsdom",
@@ -253,9 +259,6 @@
   "devEngines": {
     "node": ">=14.x",
     "npm": ">=7.x"
-  },
-  "collective": {
-    "url": "https://opencollective.com/electron-react-boilerplate-594"
   },
   "browserslist": [],
   "prettier": {
