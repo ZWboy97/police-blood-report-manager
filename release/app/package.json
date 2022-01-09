@@ -1,12 +1,12 @@
 {
-  "name": "electron-react-boilerplate",
+  "name": "police-blood-report-manager",
   "version": "5.2.0",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "description": "Police blood report manager (血样管家), an electron application based on React, React Router, Webpack",
   "main": "./dist/main/main.js",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://github.com/electron-react-boilerplate"
+    "name": "ZWboy and Electron React Boilerplate Maintainers",
+    "email": "jackchance@bupt.edu.cn",
+    "url": "https://github.com/ZWboy97/police-blood-report-manager"
   },
   "scripts": {
     "electron-rebuild": "node -r ts-node/register ../../.erb/scripts/electron-rebuild.js",

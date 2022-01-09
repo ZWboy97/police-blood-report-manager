@@ -36,7 +36,9 @@ function AllListPage() {
     const hour = date.getHours(); // 获取小时数(0-23)
     const minute = date.getMinutes(); // 获取分钟数(0-59)
     const second = date.getSeconds(); // 获取秒数(0-59)
-    return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+    const monthStr = (month + 1).toString().padStart(2, '0');
+    const dayStr = day.toString().padStart(2, '0');
+    return `${year}-${monthStr}-${dayStr} ${hour}:${minute}:${second}`;
   };
 
   const columns: ColumnsType<Record> = [
