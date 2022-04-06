@@ -90,7 +90,7 @@ function AllListPage() {
 
   return (
     <div className="all_list_container">
-      <div className="all_list_title">所有血样报告</div>
+      <div className="all_list_title">所有血样</div>
       <div className="all_list_query_container">
         <Form
           form={form}

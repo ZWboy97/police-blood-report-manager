@@ -67,13 +67,13 @@ const SearchPage = () => {
   return (
     <div className="search_page_container">
       <div className="search_page_header">
-        <div className="search_page_title">血样报告查询</div>
+        <div className="search_page_title">血样查询</div>
         <Input
           onChange={(e) => {
             setInputValue(e.target.value.toString());
           }}
           size="large"
-          placeholder="输入血样报告编号"
+          placeholder="输入血样编号"
         />
         <div className="button_container">
           <Button size="large" onClick={onSearchClick}>
@@ -88,29 +88,29 @@ const SearchPage = () => {
         {resultVisible ? (
           <div>
             <div>
-              报告位置在：
+              血样位置在：
               <span className="result_num"> {boxNum}</span>号箱子,
               <span className="result_num"> {drawerIndex}</span>号抽屉,
               <span className="result_num"> {recordSeqInDrawer}</span>号位置
             </div>
             <div>
-              对报告操作：
+              对血样操作：
               <Popconfirm
-                title="确定取出并删除该报告？"
+                title="确定取出并删除该血样？"
                 onConfirm={(e) => {
                   onDeleteReport(e);
                 }}
                 okText="确定"
                 cancelText="取消"
               >
-                <a href="http://">取出删除报告</a>
+                <a href="http://">取出删除血样</a>
               </Popconfirm>
             </div>
           </div>
         ) : (
           ''
         )}
-        {!hasResult ? <div>未查询到符合的血样报告</div> : ''}
+        {!hasResult ? <div>未查询到符合的血样</div> : ''}
       </div>
     </div>
   );

@@ -80,7 +80,7 @@ const InputReportPage = () => {
 
   return (
     <div className="input_page_container">
-      <div className="input_page_title">血样报告入库</div>
+      <div className="input_page_title">血样入库</div>
       <div className="input_page_inputs_container">
         <Form
           className="input_page_inputs"
@@ -115,15 +115,15 @@ const InputReportPage = () => {
             />
           </Form.Item>
           <Form.Item
-            label="报告编号"
+            label="血样编号"
             name="recordId"
-            rules={[{ required: true, message: '请输入报告编号!' }]}
+            rules={[{ required: true, message: '请输入血样编号!' }]}
           >
             <Input
               className="input"
               size="large"
               ref={recordInputRef}
-              placeholder="请输入报告编号"
+              placeholder="请输入血样编号"
               onPressEnter={(e) => {
                 if (!isAutoSubmit) {
                   e.preventDefault();
@@ -147,10 +147,10 @@ const InputReportPage = () => {
                         description: (
                           <div>
                             <div>
-                              1. 注意每次对报告编号的变更都将产生一次新的提交
+                              1. 注意每次对血样编号的变更都将产生一次新的提交
                             </div>
                             <div>2. 扫码枪输入时候不要人为修改</div>
-                            <div>3. 错误输入可通过报告编号查找删除</div>
+                            <div>3. 错误输入可通过血样编号查找删除</div>
                           </div>
                         ),
                       });
@@ -176,7 +176,7 @@ const InputReportPage = () => {
       <div className="last_submited_info">
         <div className="last_submited_title"> 上一次提交</div>
         <Descriptions className="last_submited_desc" size="small">
-          <Descriptions.Item label="报告编号">
+          <Descriptions.Item label="血样编号">
             <div style={{ color: 'white' }}>{latestSubmitted.recordId}</div>
           </Descriptions.Item>
           <Descriptions.Item label="箱子编号">
